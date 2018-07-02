@@ -8,13 +8,18 @@ class App extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { seconds : 0, todayDate: moment().format() };
+		this.state = { seconds : 0, 
+			todayDate: moment(),
+			startDate : moment().hours(18).minutes(54).seconds(0),
+			endDate: moment().hours(23).minutes(59).seconds(0)
+		};
 	}
 
 	tick() {
 		this.setState(prevState => ({
-			seconds: prevState.seconds + 1,
-			todayDate: moment().format()
+			todayDate: moment(),
+			secondsDiff : prevState.endDate.diff(moment(), 'seconds'),
+			minsDiff : prevState.endDate.diff(moment(), 'minutes')
 		}));
 	}
 
@@ -28,17 +33,20 @@ class App extends Component {
 
 	calculateTimer() {
 		
-		const startDate = moment().hours(18).minutes(54).seconds(0).format();
-		
-		if(moment(this.state.todayDate).isSameOrAfter(startDate)) {
+		if(moment(this.state.todayDate).isSameOrAfter(this.state.startDate)) {
+			
 			return (
 				<span>
-					We have reached maximum momentum. Start the timers!
+					<strong>
+						We need to show this as minutes : {this.state.minsDiff}
+					</strong>
 				</span>
 			)
 		} else {
 			return (
-				this.state.todayDate
+				<span>
+					{this.state.todayDate}
+				</span>
 			)
 		}
 	}
@@ -51,11 +59,9 @@ class App extends Component {
 					<img src={logo} className="App-logo" alt="logo" />
 					<h1 className="App-title">Welcome to React</h1>
 				</header>
+				
 				<p>
-					Seconds : {this.state.seconds}
-				</p>
-				<p>
-					Current Date: { this.calculateTimer() }
+					{ this.calculateTimer() }
 				</p>
 			</div>
 		);
