@@ -10,7 +10,7 @@ class App extends Component {
 		super(props);
 		this.state = { seconds : 0, 
 			todayDate: moment(),
-			startDate : moment().hours(18).minutes(54).seconds(0),
+			startDate : moment().hours(19).minutes(23).seconds(0),
 			endDate: moment().hours(23).minutes(59).seconds(0)
 		};
 	}
@@ -45,7 +45,7 @@ class App extends Component {
 		} else {
 			return (
 				<span>
-					{this.state.todayDate}
+					We have not reached max capacity : {this.state.todayDate.format("LTS")}
 				</span>
 			)
 		}
